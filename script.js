@@ -58,10 +58,10 @@ function update(){
             distance = Math.sqrt(cDist);
             console.log(distance);
 
-            if(distance < 75){
+            if(distance < 100){
                 c.strokeStyle = particles[i].color;
                 c.beginPath();
-                c.lineWidth = 0.2;
+                c.lineWidth = 0.7;
                 c.moveTo(particles[i].x, particles[i].y);
                 c.lineTo(particles[z].x, particles[z].y);
                 c.stroke();
@@ -99,7 +99,19 @@ window.addEventListener('mousemove', function(event) {
     mouse.y = event.y;
     
     particles.push(new Particle(mouse.x, mouse.y, hsl));
-})
+});
+
+window.addEventListener('click', function(event) {
+    mouse.x = event.x;
+    mouse.y = event.y;
+    
+    for(i = 0; i < 40; i++){
+        particles.push(new Particle(mouse.x, mouse.y, hsl));
+    }
+    
+});
+
+
 
 
 function refrech(){
