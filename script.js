@@ -58,13 +58,14 @@ function update(){
             distance = Math.sqrt(cDist);
             console.log(distance);
 
-            if(distance < 200){
+            if(distance < 75){
                 c.strokeStyle = particles[i].color;
                 c.beginPath();
-                c.lineWidth = 3;
+                c.lineWidth = 0.2;
                 c.moveTo(particles[i].x, particles[i].y);
                 c.lineTo(particles[z].x, particles[z].y);
                 c.stroke();
+                c.closePath();
             }
             
         }
