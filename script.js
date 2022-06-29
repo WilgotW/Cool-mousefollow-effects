@@ -5,8 +5,7 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 let hue = 0;
-let scale = "";
-let colorCode;
+let hsl = "";
 
 const mouse = {
     x: undefined,
@@ -21,9 +20,11 @@ class Particle{
         this.radius = Math.random() * 10 + 6;
         this.xVelocity = Math.random() * 3 - 1.5;
         this.yVelocity = Math.random() * 3 - 1.5;
+        this.color = color;
     }
     draw(){
-        c.fillStyle = 'red';
+        
+        c.fillStyle = this.color;
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         c.fill();
@@ -38,16 +39,51 @@ class Particle{
 }
 
 function update(){
+    refrech();
     particles.forEach(particle => {
         
     });
     for(i = 0; i < particles.length; i++){
         particles[i].draw();
         particles[i].update();
-        if(particles[i].radius <= 0.3){
-            particles.splice
+        let distance = 0;
+        let xDist = 0;
+        let yDist = 0;
+        let cDist = 0;
+        for(z = i; z < particles.length; z++){
+            xDist = particles[i].x - particles[z].x;
+            yDist = particles[i].y - particles[z].y;
+            cDist = (xDist * xDist + yDist * yDist);
+            
+            distance = Math.sqrt(cDist);
+            console.log(distance);
+
+            if(distance < 200){
+                c.strokeStyle = particles[i].color;
+                c.beginPath();
+                c.lineWidth = 3;
+                c.moveTo(particles[i].x, particles[i].y);
+                c.lineTo(particles[z].x, particles[z].y);
+                c.stroke();
+            }
+            
         }
+        
+
+        if(particles[i].radius <= 0.3){
+            particles.splice(i, 1);
+            i--;
+        }
+
+        
     }
+
+    hue++;
+    if(hue >= 360){
+        hue = 0;
+    }
+    hsl = 'hsl(' + hue + ', 100%, 50%)';
+    
     requestAnimationFrame(update);
 }
 update();
@@ -61,24 +97,15 @@ window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
     
-    hue++;
-    particles.push(new Particle(mouse.x, mouse.y, hue));
+    particles.push(new Particle(mouse.x, mouse.y, hsl));
 })
 
 
-
 function refrech(){
-    // hue++;
-    // scale = hue.toString() + '%';
-    
-    // if(hue >= 360){
-    //     hue = 0;
-    // }
-
-    c.fillStyle = 'rgba(0, 0, 0, 0.02)';
+    c.fillStyle = 'rgb(0, 0, 0)';
     c.fillRect(0, 0, canvas.width, canvas.height);
-    requestAnimationFrame(refrech);
+    
 }
-refrech();
+
 
 
