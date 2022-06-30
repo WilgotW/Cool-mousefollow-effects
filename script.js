@@ -7,9 +7,11 @@ let particles = [];
 let hue = 0;
 let hsl = "";
 
-let maxParticleInScene = 100;
+let maxParticleInScene = 1000;
 let screenRefrechOpacity = '1';
 let colorChangeSpeed = 1;
+
+let linesOn = true;
 
 
 const mouse = {
@@ -49,32 +51,35 @@ function update(){
     for(i = 0; i < particles.length; i++){
         particles[i].draw();
         particles[i].update();
-        let distance = 0;
-        let xDist = 0;
-        let yDist = 0;
-        let cDist = 0;
-        for(z = i; z < particles.length; z++){
-            xDist = particles[i].x - particles[z].x;
-            yDist = particles[i].y - particles[z].y;
-            cDist = (xDist * xDist + yDist * yDist);
-            
-            distance = Math.sqrt(cDist);
+        if(linesOn){
+            let distance = 0;
+            let xDist = 0;
+            let yDist = 0;
+            let cDist = 0;
+            for(z = i; z < particles.length; z++){
+                xDist = particles[i].x - particles[z].x;
+                yDist = particles[i].y - particles[z].y;
+                cDist = (xDist * xDist + yDist * yDist);
+                
+                distance = Math.sqrt(cDist);
 
-            if(distance < 100){
-                c.strokeStyle = particles[i].color;
-                c.beginPath();
-                c.lineWidth = 0.7;
-                c.moveTo(particles[i].x, particles[i].y);
-                c.lineTo(particles[z].x, particles[z].y);
-                c.stroke();
-                c.closePath();
+                if(distance < 100){
+                    c.strokeStyle = particles[i].color;
+                    c.beginPath();
+                    c.lineWidth = 0.7;
+                    c.moveTo(particles[i].x, particles[i].y);
+                    c.lineTo(particles[z].x, particles[z].y);
+                    c.stroke();
+                    c.closePath();
+                }
+                
             }
-            
         }
         
-        // if(particles.length > maxParticleInScene){
-        //     particles[i].shrinkRate = 0.5;
-        // }
+        
+        if(particles.length > maxParticleInScene){
+            particles[i].shrinkRate = 0.5;
+        }
         if(particles[i].radius <= 0.6){
             particles.splice(i, 1);
             i--;
@@ -120,26 +125,39 @@ function refrech(){
     c.fillRect(0, 0, canvas.width, canvas.height);
     
 }
+function removePaint(){
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+}
 
 
 
 const tailLenghtInput = document.getElementById('tailLenghtInput');
-const particleShadow = document.getElementById('particleShadow');
+const particleShadowInput = document.getElementById('particleShadow');
+const changeColorInput = document.getElementById('colorChange');
+
+const removePaintBtn = document.getElementById('removePaintButton');
+removePaintBtn.addEventListener('click', removePaint);
+
 
 function updateInputVar(){
     let temp = tailLenghtInput.value;
     if(temp == ""){
         temp = maxParticleInScene;
     }
-    maxParticleInScene = parseInt(temp);
+    maxParticleInScene = parseFloat(temp);
 
-    let temp2 = particleShadow.value;
-    if(temp2 == ""){
-        
+    let temp2 = particleShadowInput.value;
+    if(temp2 == "" || temp2 == 0){
         temp2 = screenRefrechOpacity;
-        console.log(temp2);
     }
     screenRefrechOpacity = temp2;
+
+    let temp3 = changeColorInput.value;
+    if(temp3 == "" || 0){
+        temp3 = 1;
+    }
+    colorChangeSpeed = parseFloat(temp3);
     
     requestAnimationFrame(updateInputVar);
 }
