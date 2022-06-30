@@ -129,7 +129,21 @@ function removePaint(){
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
 }
-
+function switchLinesOn(){
+    switch (linesOn) {
+        case true:
+            linesOn = false;
+            linesOnBtn.innerHTML = "Lines: Off"
+            break;
+        case false:
+            linesOn = true;
+            linesOnBtn.innerHTML = "Lines: On"
+            break;
+        default:
+            linesOn = true;
+            break;
+    }
+}
 
 
 const tailLenghtInput = document.getElementById('tailLenghtInput');
@@ -137,7 +151,10 @@ const particleShadowInput = document.getElementById('particleShadow');
 const changeColorInput = document.getElementById('colorChange');
 
 const removePaintBtn = document.getElementById('removePaintButton');
+const linesOnBtn = document.getElementById('linesOnButton');
+
 removePaintBtn.addEventListener('click', removePaint);
+linesOnBtn.addEventListener('click', switchLinesOn);
 
 
 function updateInputVar(){
