@@ -10,9 +10,11 @@ let hsl = "";
 let maxParticleInScene = 1000;
 let screenRefrechOpacity = '1';
 let colorChangeSpeed = 1;
+let maxLineLenght = 100;
 
 let linesOn = true;
 
+let e;
 
 const mouse = {
     x: undefined,
@@ -63,7 +65,7 @@ function update(){
                 
                 distance = Math.sqrt(cDist);
 
-                if(distance < 100){
+                if(distance < maxLineLenght){
                     c.strokeStyle = particles[i].color;
                     c.beginPath();
                     c.lineWidth = 0.7;
@@ -97,6 +99,7 @@ function update(){
     requestAnimationFrame(update);
 }
 update();
+
 
 window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
@@ -145,17 +148,15 @@ function switchLinesOn(){
     }
 }
 
-
 const tailLenghtInput = document.getElementById('tailLenghtInput');
 const particleShadowInput = document.getElementById('particleShadow');
 const changeColorInput = document.getElementById('colorChange');
+const lineLenghtInput = document.getElementById('lineLenght');
 
 const removePaintBtn = document.getElementById('removePaintButton');
 const linesOnBtn = document.getElementById('linesOnButton');
-
 removePaintBtn.addEventListener('click', removePaint);
 linesOnBtn.addEventListener('click', switchLinesOn);
-
 
 function updateInputVar(){
     let temp = tailLenghtInput.value;
@@ -175,6 +176,13 @@ function updateInputVar(){
         temp3 = 1;
     }
     colorChangeSpeed = parseFloat(temp3);
+
+    let temp4 = lineLenghtInput.value;
+    if(temp4 == ""){
+        temp4 = 100;
+    }
+    maxLineLenght = parseFloat(temp4);
+    
     
     requestAnimationFrame(updateInputVar);
 }
