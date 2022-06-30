@@ -8,7 +8,8 @@ let hue = 0;
 let hsl = "";
 
 let maxParticleInScene = 150;
-let screenRefrechOpacity = '1';
+let screenRefrechOpacity = '150';
+let colorChangeSpeed = 1;
 
 
 const mouse = {
@@ -45,9 +46,6 @@ class Particle{
 
 function update(){
     refrech();
-    particles.forEach(particle => {
-        
-    });
     for(i = 0; i < particles.length; i++){
         particles[i].draw();
         particles[i].update();
@@ -61,7 +59,6 @@ function update(){
             cDist = (xDist * xDist + yDist * yDist);
             
             distance = Math.sqrt(cDist);
-            console.log(distance);
 
             if(distance < 100){
                 c.strokeStyle = particles[i].color;
@@ -86,7 +83,7 @@ function update(){
         
     }
 
-    hue++;
+    hue += colorChangeSpeed;
     if(hue >= 360){
         hue = 0;
     }
@@ -118,9 +115,6 @@ window.addEventListener('click', function(event) {
     
 });
 
-
-
-
 function refrech(){
     c.fillStyle = 'rgba(0, 0, 0, '+ screenRefrechOpacity + ')';
     c.fillRect(0, 0, canvas.width, canvas.height);
@@ -129,3 +123,10 @@ function refrech(){
 
 
 
+const tailLenghtInput = document.getElementById('tailLenghtInput');
+
+function updateInputVar(){
+    maxParticleInScene == parseInt(tailLenghtInput.innerHTML());
+    requestAnimationFrame(updateInputVar);
+}
+updateInputVar();
