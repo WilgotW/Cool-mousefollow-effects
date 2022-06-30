@@ -7,6 +7,10 @@ let particles = [];
 let hue = 0;
 let hsl = "";
 
+let maxParticleInScene = 150;
+let screenRefrechOpacity = '1';
+
+
 const mouse = {
     x: undefined,
     y: undefined
@@ -21,6 +25,7 @@ class Particle{
         this.xVelocity = Math.random() * 3 - 1.5;
         this.yVelocity = Math.random() * 3 - 1.5;
         this.color = color;
+        this.shrinkRate = 0.1;
     }
     draw(){
         
@@ -33,7 +38,7 @@ class Particle{
         this.x += this.xVelocity;
         this.y += this.yVelocity;
         if(this.radius > 0.2){
-            this.radius -= 0.1;
+            this.radius -= this.shrinkRate;
         }
     }
 }
@@ -70,12 +75,14 @@ function update(){
             
         }
         
-
-        if(particles[i].radius <= 0.3){
+        if(particles.length > maxParticleInScene){
+            particles[i].shrinkRate = 0.5;
+        }
+        if(particles[i].radius <= 0.6){
             particles.splice(i, 1);
             i--;
         }
-
+        
         
     }
 
@@ -115,7 +122,7 @@ window.addEventListener('click', function(event) {
 
 
 function refrech(){
-    c.fillStyle = 'rgb(0, 0, 0)';
+    c.fillStyle = 'rgba(0, 0, 0, '+ screenRefrechOpacity + ')';
     c.fillRect(0, 0, canvas.width, canvas.height);
     
 }
