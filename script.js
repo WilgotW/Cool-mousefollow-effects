@@ -7,8 +7,8 @@ let particles = [];
 let hue = 0;
 let hsl = "";
 
-let maxParticleInScene = 150;
-let screenRefrechOpacity = '150';
+let maxParticleInScene = 100;
+let screenRefrechOpacity = '1';
 let colorChangeSpeed = 1;
 
 
@@ -72,9 +72,9 @@ function update(){
             
         }
         
-        if(particles.length > maxParticleInScene){
-            particles[i].shrinkRate = 0.5;
-        }
+        // if(particles.length > maxParticleInScene){
+        //     particles[i].shrinkRate = 0.5;
+        // }
         if(particles[i].radius <= 0.6){
             particles.splice(i, 1);
             i--;
@@ -124,9 +124,23 @@ function refrech(){
 
 
 const tailLenghtInput = document.getElementById('tailLenghtInput');
+const particleShadow = document.getElementById('particleShadow');
 
 function updateInputVar(){
-    maxParticleInScene == parseInt(tailLenghtInput.innerHTML());
+    let temp = tailLenghtInput.value;
+    if(temp == ""){
+        temp = maxParticleInScene;
+    }
+    maxParticleInScene = parseInt(temp);
+
+    let temp2 = particleShadow.value;
+    if(temp2 == ""){
+        
+        temp2 = screenRefrechOpacity;
+        console.log(temp2);
+    }
+    screenRefrechOpacity = temp2;
+    
     requestAnimationFrame(updateInputVar);
 }
 updateInputVar();
