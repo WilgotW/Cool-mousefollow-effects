@@ -11,6 +11,7 @@ let maxParticleInScene = 1000;
 let screenRefrechOpacity = '1';
 let colorChangeSpeed = 1;
 let maxLineLenght = 100;
+let particleAmount = 1;
 
 let linesOn = true;
 
@@ -110,7 +111,10 @@ window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
     
-    particles.push(new Particle(mouse.x, mouse.y, hsl));
+    for(i = 0; i < particleAmount; i++){
+        particles.push(new Particle(mouse.x, mouse.y, hsl));
+    }
+    
 });
 
 window.addEventListener('click', function(event) {
@@ -152,6 +156,7 @@ const tailLenghtInput = document.getElementById('tailLenghtInput');
 const particleShadowInput = document.getElementById('particleShadow');
 const changeColorInput = document.getElementById('colorChange');
 const lineLenghtInput = document.getElementById('lineLenght');
+const particleSpawnAmountInput = document.getElementById('particleAmount');
 
 const removePaintBtn = document.getElementById('removePaintButton');
 const linesOnBtn = document.getElementById('linesOnButton');
@@ -183,7 +188,12 @@ function updateInputVar(){
     }
     maxLineLenght = parseFloat(temp4);
     
-    
+    let temp5 = particleSpawnAmountInput.value;
+    if(temp5 == ""){
+        temp5 = 1;
+    }
+    particleAmount = parseFloat(temp5);
+
     requestAnimationFrame(updateInputVar);
 }
 updateInputVar();

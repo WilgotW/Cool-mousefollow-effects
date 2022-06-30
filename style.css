@@ -17,25 +17,30 @@ body{
     justify-content: center;
     position: absolute;
     width: 100%;
+    min-height: 5vh;
+    max-height: 10vh;
     background-color: white;
 }
 
 
 
 button{
+    font-family: 'Gantari', sans-serif;
     background: white;
     border-width: 1px;
-    font-size: clamp(1px, 1.7vw, 10px);
+    font-size: clamp(2px, 1.4vw, 10px);
     margin-right: 1%;
 }
 
 
 input{
+    font-family: 'Gantari', sans-serif;
     margin-right: 1%;
-    font-size: clamp(1px, 1.7vw, 10px);
+    font-size: clamp(2px, 1.4vw, 10px);
     width: 3%;
 }   
 
 p{
-    font-size: clamp(1px, 1.7vw, 10px);
+    font-family: 'Gantari', sans-serif;
+    font-size: clamp(2px, 1.4vw, 10px);
 }
