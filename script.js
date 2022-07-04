@@ -121,7 +121,7 @@ window.addEventListener('click', function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
     
-    for(i = 0; i < 40; i++){
+    for(i = 0; i < 50; i++){
         particles.push(new Particle(mouse.x, mouse.y, hsl));
     }
     
